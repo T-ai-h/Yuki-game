@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Visual Novel Demo</title>
+<style>
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    background: black;
+    color: white;
+  }
+  #game {
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+  }
+  img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+  #text {
+    padding: 15px;
+    background: rgba(0,0,0,0.7);
+  }
+  button {
+    width: 90%;
+    margin: 8px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #ff4d88;
+    color: white;
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div id="game">
+  <img id="bg" src="">
+  <div id="text"></div>
+  <div id="choices"></div>
+</div>
+
+<script>
+let state = "start";
+
+function render() {
+  let text = document.getElementById("text");
+  let choices = document.getElementById("choices");
+  let bg = document.getElementById("bg");
+
+  choices.innerHTML = "";
+
+  if(state === "start"){
+    bg.src = "https://picsum.photos/500/300?school";
+    text.innerText = "หลังเลิกเรียน...เหลือแค่เรากับเรย์สองคน";
+    addChoice("อยู่ต่อ", "scene1");
+    addChoice("รีบกลับ", "bad1");
+  }
+
+  else if(state === "scene1"){
+    bg.src = "https://picsum.photos/500/300?classroom";
+    text.innerText = "เรย์เดินเข้ามาใกล้...จนคุณถอยไม่ได้";
+    addChoice("หันหน้าหนี", "scene2a");
+    addChoice("จ้องกลับ", "scene2b");
+    addChoice("จับมือเธอ", "scene2c");
+  }
+
+  else if(state === "scene2a"){
+    bg.src = "https://picsum.photos/500/300?anime";
+    text.innerText = "เธอจับคางคุณ... 'อย่าหนีสิ'";
+    addChoice("ยังหลบ", "bad2");
+    addChoice("ยอมมองเธอ", "scene3");
+  }
+
+  else if(state === "scene2b"){
+    bg.src = "https://picsum.photos/500/300?romance";
+    text.innerText = "เธอยิ้ม... 'งั้นฉันจะไม่ออมมือแล้วนะ'";
+    addChoice("เขินแล้วหลบ", "bad2");
+    addChoice("สู้ต่อ", "scene3");
+  }
+
+  else if(state === "scene2c"){
+    bg.src = "https://picsum.photos/500/300?love";
+    text.innerText = "เธอกุมมือคุณแน่น... 'ห้ามถอยล่ะ'";
+    addChoice("ไม่ปล่อยมือ", "scene3");
+    addChoice("ปล่อย", "bad2");
+  }
+
+  else if(state === "scene3"){
+    bg.src = "https://picsum.photos/500/300?rain";
+    text.innerText = "ฝนตก...เรย์ดึงคุณเข้าไปใกล้";
+    addChoice("บอกความรู้สึก", "trueEnd");
+    addChoice("เงียบ", "bad3");
+  }
+
+  else if(state === "trueEnd"){
+    bg.src = "https://picsum.photos/500/300?sunset";
+    text.innerText = "💖 เธอยิ้ม... 'งั้นเป็นแฟนกันเลยไหม'";
+  }
+
+  else if(state === "bad1"){
+    bg.src = "https://picsum.photos/500/300?night";
+    text.innerText = "💔 คุณกลับบ้าน...โดยไม่รู้อะไรเลย";
+  }
+
+  else if(state === "bad2"){
+    bg.src = "https://picsum.photos/500/300?alone";
+    text.innerText = "💔 คุณถอยออกมา...และทุกอย่างก็ห่างออกไป";
+  }
+
+  else if(state === "bad3"){
+    bg.src = "https://picsum.photos/500/300?sad";
+    text.innerText = "💔 คุณไม่พูด...และเธอก็เดินจากไป";
+  }
+}
+
+function addChoice(text, next){
+  let btn = document.createElement("button");
+  btn.innerText = text;
+  btn.onclick = function(){
+    state = next;
+    render();
+  };
+  document.getElementById("choices").appendChild(btn);
+}
+
+render();
+</script>
+
+</body>
+</html>
